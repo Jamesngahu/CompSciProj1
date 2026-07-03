@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - CBC Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="navbar">
+  <div class="logo">CBC Portal | System Admin</div>
+  <nav>
+    <ul>
+      <li><span id="admin-greeting" class="greeting"></span></li>
+      <li><a href="#" onclick="logout()" class="btn-logout">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="page-main">
+
+  <section class="section">
+    <h2>Pending Account Approvals (Schools)</h2>
+    <div id="unapproved-schools-container" class="grid"></div>
+  </section>
+
+  <section class="section">
+    <h2>Pending Educator Verifications</h2>
+    <div id="unvetted-container" class="grid"></div>
+  </section>
+
+  <section class="section">
+    <h2>System User Directory</h2>
+    <div class="panel panel-scroll-x">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody id="users-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>User Feedback Inbox</h2>
+    <div id="feedback-container" class="grid"></div>
+  </section>
+
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

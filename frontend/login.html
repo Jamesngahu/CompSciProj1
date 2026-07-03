@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CBC Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+
+<div class="auth-card">
+    <div class="auth-tabs">
+        <button id="tab-login" class="active" onclick="switchTab('login')" type="button">Login</button>
+        <button id="tab-register" onclick="switchTab('register')" type="button">Register</button>
+    </div>
+
+    <!-- Step 1: email + password -->
+    <form id="login-form" class="auth-form">
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to continue</p>
+        <input type="email" id="login-email" placeholder="Email address" required autocomplete="username">
+        <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+        <button type="submit" class="btn-primary">Continue</button>
+        <p id="login-message" class="message"></p>
+    </form>
+
+    <!-- Step 2: emailed verification code -->
+    <form id="verify-form" class="auth-form hidden">
+        <h2>Check your email</h2>
+        <p class="subtitle">Enter the 6-digit code we sent to <span id="verify-email-label"></span></p>
+        <input type="text" id="verify-code" placeholder="6-digit code" inputmode="numeric" maxlength="6" required autocomplete="one-time-code">
+        <button type="submit" class="btn-primary">Verify & Login</button>
+        <button type="button" class="btn-link" onclick="backToLogin()">Back</button>
+        <p id="verify-message" class="message"></p>
+    </form>
+
+    <form id="register-form" class="auth-form hidden">
+        <h2>Create an account</h2>
+        <input type="text" id="reg-name" placeholder="Full name" required>
+        <input type="email" id="reg-email" placeholder="Email address" required>
+        <input type="password" id="reg-password" placeholder="Password" required autocomplete="new-password">
+        <p class="field-hint">At least 8 characters, with uppercase, lowercase, a number and a special character.</p>
+
+        <select id="reg-role" required onchange="toggleRoleFields()">
+            <option value="" disabled selected>Select your role...</option>
+            <option value="DONOR">Resource Donor</option>
+            <option value="SCHOOL_ADMIN">School Administrator</option>
+            <option value="EDUCATOR">Volunteer Educator</option>
+        </select>
+
+        <div id="educator-fields" class="role-fields hidden">
+            <small><strong>Note:</strong> Valid TSC registration is required for all teaching placements.</small>
+            <input type="text" id="reg-tsc" placeholder="TSC registration number">
+            <textarea id="reg-qualifications" placeholder="Brief summary of qualifications" rows="3"></textarea>
+        </div>
+
+        <div id="school-fields" class="role-fields school hidden">
+            <small><strong>Note:</strong> Valid MOE details are required to register your institution.</small>
+            <input type="text" id="reg-inst-name" placeholder="Institution name (e.g., Kajiado Primary)">
+            <input type="text" id="reg-county" placeholder="County">
+            <input type="text" id="reg-moe" placeholder="MOE registration number (e.g., MOE12345)">
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+        <p id="reg-message" class="message"></p>
+    </form>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
