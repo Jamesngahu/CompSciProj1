@@ -148,7 +148,7 @@ public class MpesaService {
             body.put("TransactionID", donation.getMpesaReceiptNumber());
             body.put("Amount", donation.getQuantity());
             body.put("ReceiverParty", shortcode);
-            body.put("RecieverIdentifierType", "4");
+            body.put("RecieverIdentifierType", 4);
             body.put("ResultURL", callbackBaseUrl + "/api/mpesa/reversal/result");
             body.put("QueueTimeOutURL", callbackBaseUrl + "/api/mpesa/reversal/timeout");
             body.put("Remarks", "Test mode - automatic donation refund");
