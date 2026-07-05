@@ -1,6 +1,7 @@
 package com.cbcportal.services;
 
 import com.cbcportal.models.Donation;
+import com.cbcportal.models.RefundStatus;
 import com.cbcportal.repositories.DonationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,6 +139,21 @@ public class MpesaService {
         reverseTransaction(donation);
     }
 
+    /** Lets an admin manually retry a refund that previously failed (e.g. after a config fix). */
+    public void retryRefund(Long donationId) {
+        Donation donation = donationRepository.findById(donationId)
+                .orElseThrow(() -> new RuntimeException("Donation not found"));
+
+        if (donation.getMpesaReceiptNumber() == null) {
+            throw new RuntimeException("This donation was never paid, so there is nothing to refund.");
+        }
+        if (donation.getRefundStatus() == RefundStatus.REFUNDED) {
+            throw new RuntimeException("This donation has already been refunded.");
+        }
+
+        reverseTransaction(donation);
+    }
+
     /** Refunds the donor by reversing the transaction just completed (test-mode only). */
     private void reverseTransaction(Donation donation) {
         try {
@@ -148,7 +164,7 @@ public class MpesaService {
             body.put("TransactionID", donation.getMpesaReceiptNumber());
             body.put("Amount", donation.getQuantity());
             body.put("ReceiverParty", shortcode);
-            body.put("RecieverIdentifierType", 4);
+            body.put("RecieverIdentifierType", 11);
             body.put("ResultURL", callbackBaseUrl + "/api/mpesa/reversal/result");
             body.put("QueueTimeOutURL", callbackBaseUrl + "/api/mpesa/reversal/timeout");
             body.put("Remarks", "Test mode - automatic donation refund");

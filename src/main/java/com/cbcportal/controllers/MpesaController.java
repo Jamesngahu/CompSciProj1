@@ -30,6 +30,17 @@ public class MpesaController {
         }
     }
 
+    // Admin manually retries a refund that previously failed (e.g. after a config fix)
+    @PostMapping("/reversal/retry/{donationId}")
+    public ResponseEntity<?> retryRefund(@PathVariable Long donationId) {
+        try {
+            mpesaService.retryRefund(donationId);
+            return ResponseEntity.ok(Map.of("message", "Refund retry submitted."));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     // Safaricom calls this once the donor accepts/rejects/times out on the STK prompt
     @PostMapping("/stkpush/callback")
     public ResponseEntity<?> stkCallback(@RequestBody Map<String, Object> payload) {
