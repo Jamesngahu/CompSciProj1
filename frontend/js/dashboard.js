@@ -227,7 +227,6 @@ async function loadDonorHistory() {
             return;
         }
 
-        const refundBadge = { NOT_APPLICABLE: '', PENDING: '<span class="badge badge-info">Refund pending</span>', REFUNDED: '<span class="badge badge-success">Refunded</span>', FAILED: '<span class="badge badge-warning">Refund failed</span>' };
         const statusBadge = { PENDING: '<span class="badge badge-info">Awaiting payment</span>', COMPLETED: '<span class="badge badge-success">Paid</span>', FAILED: '<span class="badge badge-warning">Failed</span>' };
 
         history.forEach(don => {
@@ -240,7 +239,7 @@ async function loadDonorHistory() {
                 <h4>${don.resourceRequest.title}</h4>
                 <p><strong>Donated:</strong> ${isMonetary ? `KES ${don.quantity}` : `${don.quantity} units`}</p>
                 <p><strong>To:</strong> 🏫 ${don.resourceRequest.institutionName}</p>
-                ${isMonetary ? `<p>${statusBadge[don.status] || ''} ${refundBadge[don.refundStatus] || ''}</p>` : ''}
+                ${isMonetary ? `<p>${statusBadge[don.status] || ''}</p>` : ''}
                 <p class="muted"><strong>Date:</strong> ${date}</p>
             `;
             container.appendChild(card);
