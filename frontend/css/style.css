@@ -111,13 +111,15 @@ a { color: inherit; }
 /* Buttons used inside light-background surfaces (auth forms, dashboard) */
 .surface .btn-primary,
 .auth-card .btn-primary,
-.page-main .btn-primary {
+.page-main .btn-primary,
+.content-area .btn-primary {
     background-color: var(--color-primary);
     color: white;
 }
 .surface .btn-primary:hover,
 .auth-card .btn-primary:hover,
-.page-main .btn-primary:hover { background-color: var(--color-primary-dark); }
+.page-main .btn-primary:hover,
+.content-area .btn-primary:hover { background-color: var(--color-primary-dark); }
 .surface .btn-primary:disabled,
 .auth-card .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
@@ -242,12 +244,75 @@ footer {
 
 .section { margin-bottom: 2.5rem; }
 
-.section h2 {
+.section h2,
+.content-view h2 {
     color: var(--color-ink);
     border-bottom: 2px solid var(--color-border);
     padding-bottom: 0.5rem;
     margin-bottom: 1.25rem;
     font-size: 1.3rem;
+}
+
+/* Dashboard side-panel layout */
+.dashboard-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.5rem 5% 3rem;
+}
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.75rem;
+    position: sticky;
+    top: 1.5rem;
+}
+
+.side-nav button {
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-ink-soft);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.side-nav button:hover { background: var(--color-bg); color: var(--color-ink); }
+
+.side-nav button.active {
+    background: var(--color-primary);
+    color: white;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.content-view.hidden { display: none !important; }
+
+@media (max-width: 800px) {
+    .dashboard-layout { flex-direction: column; padding: 1rem 5% 2rem; }
+    .side-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        position: static;
+    }
+    .side-nav button { white-space: nowrap; }
 }
 
 .panel {

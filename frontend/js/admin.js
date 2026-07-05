@@ -5,8 +5,41 @@ if (!currentUser || currentUser.role !== 'SYSTEM_ADMIN') {
     window.location.href = 'login.html';
 }
 
+const NAV_ITEMS = [
+    { id: 'schools-section', label: 'School Approvals' },
+    { id: 'educators-section', label: 'Educator Verifications' },
+    { id: 'users-section', label: 'User Directory' },
+    { id: 'admin-feedback-section', label: 'Feedback Inbox' }
+];
+
+function switchView(sectionId) {
+    document.querySelectorAll('.content-view').forEach(el => el.classList.add('hidden'));
+    document.getElementById(sectionId)?.classList.remove('hidden');
+
+    document.querySelectorAll('#side-nav button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === sectionId);
+    });
+}
+
+function buildSideNav() {
+    const sideNav = document.getElementById('side-nav');
+    sideNav.innerHTML = '';
+
+    NAV_ITEMS.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = item.label;
+        btn.dataset.target = item.id;
+        btn.onclick = () => switchView(item.id);
+        sideNav.appendChild(btn);
+    });
+
+    switchView(NAV_ITEMS[0].id);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('admin-greeting').textContent = `Admin: ${currentUser.fullName}`;
+    buildSideNav();
     loadUnapprovedSchools();
     loadUnvettedEducators();
     loadAllUsers();

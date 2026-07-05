@@ -17,96 +17,100 @@
   </nav>
 </header>
 
-<main class="page-main">
+<div class="dashboard-layout">
+  <aside class="side-nav" id="side-nav"></aside>
 
-  <!-- Notifications Section -->
-  <section id="notifications-section" class="section">
-    <h2>Your Alerts</h2>
-    <div id="notifications-container" class="panel scroll-box"></div>
-  </section>
+  <main class="content-area">
 
-  <!-- Donor History Section -->
-  <section id="donor-history-section" class="section hidden">
-    <h2>My Donation History</h2>
-    <div id="donor-history-container" class="grid"></div>
-  </section>
+    <!-- Notifications Section -->
+    <section id="notifications-section" class="content-view hidden">
+      <h2>Your Alerts</h2>
+      <div id="notifications-container" class="panel scroll-box"></div>
+    </section>
 
-  <!-- Educator Profile Section -->
-  <section id="educator-profile-section" class="section panel-tinted hidden">
-    <h2>My Professional Profile</h2>
-    <form id="educator-profile-form" class="panel-form">
-      <input type="text" id="prof-tsc" placeholder="TSC Registration Number" required>
-      <textarea id="prof-qualifications" placeholder="Brief Summary of Qualifications..." required rows="4"></textarea>
-      <button type="submit" class="btn-primary">Update Profile</button>
-      <p id="prof-message" class="message"></p>
-    </form>
-  </section>
+    <!-- Donor History Section -->
+    <section id="donor-history-section" class="content-view hidden">
+      <h2>My Donation History</h2>
+      <div id="donor-history-container" class="grid"></div>
+    </section>
 
-  <!-- Educator History Section -->
-  <section id="educator-history-section" class="section hidden">
-    <h2>My Application History</h2>
-    <div id="educator-history-container" class="grid"></div>
-  </section>
-
-  <!-- School Admin Section -->
-  <section id="admin-section" class="section panel-tinted hidden">
-    <h2>Post New Community Needs</h2>
-    <div class="two-col">
-      <form id="request-form" class="panel-form">
-        <h3>Request Resources</h3>
-        <div class="radio-row">
-          <label><input type="radio" name="req-donation-type" value="ITEM" checked onchange="toggleRequestType()"> Physical items</label>
-          <label><input type="radio" name="req-donation-type" value="MONEY" onchange="toggleRequestType()"> Monetary (M-Pesa)</label>
-        </div>
-        <input type="text" id="req-title" placeholder="Request Title (e.g., Grade 4 Math Textbooks)" required>
-        <input type="text" id="req-type" placeholder="Item Type (e.g., Textbook, Lab Equipment)" required>
-        <input type="number" id="req-qty" placeholder="Quantity Needed" required>
-        <textarea id="req-desc" placeholder="Detailed Description..." required rows="3"></textarea>
-        <button type="submit" class="btn-primary">Post Request</button>
-        <p id="request-message" class="message"></p>
+    <!-- Educator Profile Section -->
+    <section id="educator-profile-section" class="content-view hidden panel-tinted">
+      <h2>My Professional Profile</h2>
+      <form id="educator-profile-form" class="panel-form">
+        <input type="text" id="prof-tsc" placeholder="TSC Registration Number" required>
+        <textarea id="prof-qualifications" placeholder="Brief Summary of Qualifications..." required rows="4"></textarea>
+        <button type="submit" class="btn-primary">Update Profile</button>
+        <p id="prof-message" class="message"></p>
       </form>
+    </section>
 
-      <form id="vacancy-form" class="panel-form">
-        <h3>Post Teaching Vacancy</h3>
-        <input type="text" id="vac-title" placeholder="Vacancy Title (e.g., Primary English Teacher)" required>
-        <input type="text" id="vac-subject" placeholder="Subject Area" required>
-        <textarea id="vac-desc" placeholder="Job Description & Requirements..." required rows="4"></textarea>
-        <button type="submit" class="btn-primary">Post Vacancy</button>
-        <p id="vacancy-message" class="message"></p>
+    <!-- Educator History Section -->
+    <section id="educator-history-section" class="content-view hidden">
+      <h2>My Application History</h2>
+      <div id="educator-history-container" class="grid"></div>
+    </section>
+
+    <!-- School Admin: Post New Needs -->
+    <section id="admin-section" class="content-view hidden panel-tinted">
+      <h2>Post New Community Needs</h2>
+      <div class="two-col">
+        <form id="request-form" class="panel-form">
+          <h3>Request Resources</h3>
+          <div class="radio-row">
+            <label><input type="radio" name="req-donation-type" value="ITEM" checked onchange="toggleRequestType()"> Physical items</label>
+            <label><input type="radio" name="req-donation-type" value="MONEY" onchange="toggleRequestType()"> Monetary (M-Pesa)</label>
+          </div>
+          <input type="text" id="req-title" placeholder="Request Title (e.g., Grade 4 Math Textbooks)" required>
+          <input type="text" id="req-type" placeholder="Item Type (e.g., Textbook, Lab Equipment)" required>
+          <input type="number" id="req-qty" placeholder="Quantity Needed" required>
+          <textarea id="req-desc" placeholder="Detailed Description..." required rows="3"></textarea>
+          <button type="submit" class="btn-primary">Post Request</button>
+          <p id="request-message" class="message"></p>
+        </form>
+
+        <form id="vacancy-form" class="panel-form">
+          <h3>Post Teaching Vacancy</h3>
+          <input type="text" id="vac-title" placeholder="Vacancy Title (e.g., Primary English Teacher)" required>
+          <input type="text" id="vac-subject" placeholder="Subject Area" required>
+          <textarea id="vac-desc" placeholder="Job Description & Requirements..." required rows="4"></textarea>
+          <button type="submit" class="btn-primary">Post Vacancy</button>
+          <p id="vacancy-message" class="message"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Incoming Applications Section (School Admin Only) -->
+    <section id="applications-section" class="content-view hidden">
+      <h2>Incoming Teaching Applications</h2>
+      <div id="applications-container" class="grid"></div>
+    </section>
+
+    <!-- Resource Requests Board -->
+    <section id="requests-section" class="content-view hidden">
+      <h2>Community Resource Requests</h2>
+      <div id="requests-container" class="grid"></div>
+    </section>
+
+    <!-- Teaching Vacancies Board -->
+    <section id="vacancies-section" class="content-view hidden">
+      <h2>Teaching Vacancies</h2>
+      <div id="vacancies-container" class="grid"></div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback-section" class="content-view hidden panel-tinted">
+      <h2>System Support & Feedback</h2>
+      <form id="feedback-form" class="panel-form">
+        <input type="text" id="fb-subject" placeholder="Subject (e.g., Bug Report, General Question)" required>
+        <textarea id="fb-message" placeholder="Please describe your issue or feedback in detail..." required rows="3"></textarea>
+        <button type="submit" class="btn-primary">Submit to Admin</button>
       </form>
-    </div>
-  </section>
+      <p id="feedback-message" class="message"></p>
+    </section>
 
-  <!-- Incoming Applications Section (School Admin Only) -->
-  <section id="applications-section" class="section hidden">
-    <h2>Incoming Teaching Applications</h2>
-    <div id="applications-container" class="grid"></div>
-  </section>
-
-  <!-- Resource Requests Board -->
-  <section id="requests-section" class="section">
-    <h2>Community Resource Requests</h2>
-    <div id="requests-container" class="grid"></div>
-  </section>
-
-  <!-- Teaching Vacancies Board -->
-  <section id="vacancies-section" class="section">
-    <h2>Teaching Vacancies</h2>
-    <div id="vacancies-container" class="grid"></div>
-  </section>
-
-  <!-- Feedback Section -->
-  <section id="feedback-section" class="section panel-tinted">
-    <h2>System Support & Feedback</h2>
-    <form id="feedback-form" class="panel-form">
-      <input type="text" id="fb-subject" placeholder="Subject (e.g., Bug Report, General Question)" required>
-      <textarea id="fb-message" placeholder="Please describe your issue or feedback in detail..." required rows="3"></textarea>
-      <button type="submit" class="btn-primary">Submit to Admin</button>
-    </form>
-    <p id="feedback-message" class="message"></p>
-  </section>
-
-</main>
+  </main>
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/dashboard.js"></script>

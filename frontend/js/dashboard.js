@@ -5,25 +5,71 @@ if (!currentUser) {
     window.location.href = 'login.html';
 }
 
+// Which side-panel tabs each role sees, and in what order.
+const NAV_CONFIG = {
+    DONOR: [
+        { id: 'requests-section', label: 'Resource Requests' },
+        { id: 'donor-history-section', label: 'My Donations' },
+        { id: 'notifications-section', label: 'Alerts' },
+        { id: 'feedback-section', label: 'Feedback' }
+    ],
+    SCHOOL_ADMIN: [
+        { id: 'admin-section', label: 'Post New Needs' },
+        { id: 'requests-section', label: 'My Requests' },
+        { id: 'vacancies-section', label: 'My Vacancies' },
+        { id: 'applications-section', label: 'Applications' },
+        { id: 'notifications-section', label: 'Alerts' },
+        { id: 'feedback-section', label: 'Feedback' }
+    ],
+    EDUCATOR: [
+        { id: 'educator-profile-section', label: 'My Profile' },
+        { id: 'vacancies-section', label: 'Vacancies' },
+        { id: 'educator-history-section', label: 'My Applications' },
+        { id: 'notifications-section', label: 'Alerts' },
+        { id: 'feedback-section', label: 'Feedback' }
+    ]
+};
+
+function switchView(sectionId) {
+    document.querySelectorAll('.content-view').forEach(el => el.classList.add('hidden'));
+    document.getElementById(sectionId)?.classList.remove('hidden');
+
+    document.querySelectorAll('#side-nav button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === sectionId);
+    });
+}
+
+function buildSideNav() {
+    const items = NAV_CONFIG[currentUser.role] || [];
+    const sideNav = document.getElementById('side-nav');
+    sideNav.innerHTML = '';
+
+    items.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = item.label;
+        btn.dataset.target = item.id;
+        btn.onclick = () => switchView(item.id);
+        sideNav.appendChild(btn);
+    });
+
+    if (items.length > 0) switchView(items[0].id);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('user-greeting').textContent = `Welcome, ${currentUser.fullName} (${currentUser.role})`;
 
+    buildSideNav();
+
     if (currentUser.role === 'SCHOOL_ADMIN') {
-        document.getElementById('admin-section')?.classList.remove('hidden');
-        document.getElementById('applications-section')?.classList.remove('hidden');
         loadSchoolApplications();
     }
 
     if (currentUser.role === 'DONOR') {
-        document.getElementById('donor-history-section')?.classList.remove('hidden');
-        document.getElementById('vacancies-section')?.classList.add('hidden');
         loadDonorHistory();
     }
 
     if (currentUser.role === 'EDUCATOR') {
-        document.getElementById('requests-section')?.classList.add('hidden');
-        document.getElementById('educator-history-section')?.classList.remove('hidden');
-        document.getElementById('educator-profile-section')?.classList.remove('hidden');
         loadEducatorProfile();
         loadEducatorHistory();
     }

@@ -17,42 +17,46 @@
   </nav>
 </header>
 
-<main class="page-main">
+<div class="dashboard-layout">
+  <aside class="side-nav" id="side-nav"></aside>
 
-  <section class="section">
-    <h2>Pending Account Approvals (Schools)</h2>
-    <div id="unapproved-schools-container" class="grid"></div>
-  </section>
+  <main class="content-area">
 
-  <section class="section">
-    <h2>Pending Educator Verifications</h2>
-    <div id="unvetted-container" class="grid"></div>
-  </section>
+    <section id="schools-section" class="content-view hidden">
+      <h2>Pending Account Approvals (Schools)</h2>
+      <div id="unapproved-schools-container" class="grid"></div>
+    </section>
 
-  <section class="section">
-    <h2>System User Directory</h2>
-    <div class="panel panel-scroll-x">
-      <table>
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody id="users-table-body"></tbody>
-      </table>
-    </div>
-  </section>
+    <section id="educators-section" class="content-view hidden">
+      <h2>Pending Educator Verifications</h2>
+      <div id="unvetted-container" class="grid"></div>
+    </section>
 
-  <section class="section">
-    <h2>User Feedback Inbox</h2>
-    <div id="feedback-container" class="grid"></div>
-  </section>
+    <section id="users-section" class="content-view hidden">
+      <h2>System User Directory</h2>
+      <div class="panel panel-scroll-x">
+        <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody id="users-table-body"></tbody>
+        </table>
+      </div>
+    </section>
 
-</main>
+    <section id="admin-feedback-section" class="content-view hidden">
+      <h2>User Feedback Inbox</h2>
+      <div id="feedback-container" class="grid"></div>
+    </section>
+
+  </main>
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/admin.js"></script>
