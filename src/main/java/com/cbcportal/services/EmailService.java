@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Sends email via Resend's HTTP API rather than raw SMTP - most PaaS hosts
+ * Sends email via Brevo's HTTP API rather than raw SMTP - most PaaS hosts
  * (including Railway) block outbound SMTP ports to prevent spam abuse, but
  * a plain HTTPS call works everywhere.
  */
@@ -25,15 +25,18 @@ public class EmailService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${resend.api-key}")
+    @Value("${brevo.api-key}")
     private String apiKey;
 
-    @Value("${resend.from-email}")
+    @Value("${brevo.from-email}")
     private String fromEmail;
+
+    @Value("${brevo.from-name}")
+    private String fromName;
 
     public void sendLoginCode(String toEmail, String code) {
         if (apiKey == null || apiKey.isBlank()) {
-            log.warn("RESEND_API_KEY not configured - login code for {}: {}", toEmail, code);
+            log.warn("BREVO_API_KEY not configured - login code for {}: {}", toEmail, code);
             return;
         }
 
@@ -41,20 +44,21 @@ public class EmailService {
                 + "\n\nThis code expires in 5 minutes. If you did not request it, you can ignore this email.";
 
         Map<String, Object> body = Map.of(
-                "from", fromEmail,
-                "to", List.of(toEmail),
+                "sender", Map.of("email", fromEmail, "name", fromName),
+                "to", List.of(Map.of("email", toEmail)),
                 "subject", "Your CBC Portal login code",
-                "text", text
+                "textContent", text
         );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(apiKey);
+        headers.set("api-key", apiKey);
+        headers.set("accept", "application/json");
 
         try {
-            restTemplate.postForObject("https://api.resend.com/emails", new HttpEntity<>(body, headers), Map.class);
+            restTemplate.postForObject("https://api.brevo.com/v3/smtp/email", new HttpEntity<>(body, headers), Map.class);
         } catch (RestClientException e) {
-            // Falls back to logging the code so the app stays usable if Resend is
+            // Falls back to logging the code so the app stays usable if Brevo is
             // misconfigured or temporarily unreachable.
             log.warn("Could not email login code to {} ({}). Code: {}", toEmail, e.getMessage(), code);
         }
