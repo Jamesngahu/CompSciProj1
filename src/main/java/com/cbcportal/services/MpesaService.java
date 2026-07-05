@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,11 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.crypto.Cipher;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -67,11 +62,10 @@ public class MpesaService {
     @Value("${mpesa.initiator-name}")
     private String initiatorName;
 
-    @Value("${mpesa.initiator-password}")
-    private String initiatorPassword;
-
-    @Value("${mpesa.cert-path}")
-    private String certPath;
+    // Pre-encrypted via Daraja's "Test Credentials" page rather than encrypted
+    // locally with a certificate - simpler and avoids bundling Safaricom's cert.
+    @Value("${mpesa.security-credential}")
+    private String securityCredential;
 
     /** Step 1: prompt the donor's phone with an STK push for the given amount. */
     public Map<String, Object> initiateStkPush(Long donorId, Long requestId, String rawPhoneNumber, int amount) {
@@ -147,8 +141,6 @@ public class MpesaService {
     /** Refunds the donor by reversing the transaction just completed (test-mode only). */
     private void reverseTransaction(Donation donation) {
         try {
-            String securityCredential = encryptInitiatorPassword();
-
             Map<String, Object> body = new LinkedHashMap<>();
             body.put("Initiator", initiatorName);
             body.put("SecurityCredential", securityCredential);
@@ -211,18 +203,6 @@ public class MpesaService {
             }
         }
         return java.util.Optional.empty();
-    }
-
-    private String encryptInitiatorPassword() throws Exception {
-        try (InputStream certStream = new ClassPathResource(certPath).getInputStream()) {
-            CertificateFactory factory = CertificateFactory.getInstance("X.509");
-            X509Certificate certificate = (X509Certificate) factory.generateCertificate(certStream);
-
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, certificate.getPublicKey());
-            byte[] encrypted = cipher.doFinal(initiatorPassword.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(encrypted);
-        }
     }
 
     private String getAccessToken() {
