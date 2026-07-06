@@ -73,7 +73,7 @@ async function loadUnapprovedSchools() {
                 <p><strong>Email:</strong> ${profile.user.email}</p>
                 <p><strong>County:</strong> ${profile.county}</p>
                 <p><strong>MOE No:</strong> <span class="badge badge-warning">${profile.moeNumber}</span></p>
-                <button class="btn-primary btn-block btn-approve" onclick="approveAccount(${profile.user.id})">Verify MOE & Approve Login</button>
+                <button class="btn-primary btn-block btn-approve" onclick="approveAccount(${profile.user.id})">Approve MOE school no. and approve login</button>
             `;
             container.appendChild(card);
         });
@@ -120,7 +120,7 @@ async function loadUnvettedEducators() {
                 <p><strong>Email:</strong> ${profile.user.email}</p>
                 <p><strong>TSC No:</strong> <span class="badge badge-warning">${profile.tscRegistrationNumber}</span></p>
                 <p><strong>Qualifications:</strong> ${profile.qualifications}</p>
-                <button class="btn-primary btn-block btn-approve" onclick="verifyEducator(${profile.id})">Approve TSC & Verify</button>
+                <button class="btn-primary btn-block btn-approve" onclick="verifyEducator(${profile.id})">Approve TSC registration number and approve login</button>
             `;
             container.appendChild(card);
         });
