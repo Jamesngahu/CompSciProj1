@@ -14,7 +14,8 @@ const NAV_CONFIG = {
         { id: 'feedback-section', label: 'Feedback' }
     ],
     SCHOOL_ADMIN: [
-        { id: 'admin-section', label: 'Post New Needs' },
+        { id: 'request-resources-section', label: 'Request Resources' },
+        { id: 'post-vacancy-section', label: 'Post Teaching Vacancy' },
         { id: 'requests-section', label: 'My Requests' },
         { id: 'vacancies-section', label: 'My Vacancies' },
         { id: 'applications-section', label: 'Applications' },
