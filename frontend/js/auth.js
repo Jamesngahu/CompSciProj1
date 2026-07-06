@@ -9,6 +9,13 @@ function switchTab(tab) {
     document.getElementById('tab-register').classList.toggle('active', tab === 'register');
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('tab') === 'register') {
+        switchTab('register');
+    }
+});
+
 function backToLogin() {
     document.getElementById('verify-form').classList.add('hidden');
     document.getElementById('login-form').classList.remove('hidden');
